@@ -12,16 +12,22 @@ import           Language.Haskell.Brittany.Internal.Types
 import           Language.Haskell.Brittany.Internal.LayouterBasics
 import           Language.Haskell.Brittany.Internal.Config.Types
 
-import           GHC                            ( unLoc
-                                                , GenLocated(L)
-                                                , moduleNameString
-                                                , AnnKeywordId(..)
-                                                , Located
-                                                , runGhc
-                                                , ModuleName
-                                                )
+import           GHC     ( unLoc
+                         , runGhc
+                         , GenLocated(L)
+                         , moduleNameString
+                         , AnnKeywordId(..)
+                         , Located
+                         , ModuleName
+                         )
+#if MIN_VERSION_ghc(8,10,1)   /* ghc-8.10.1 */
+import           GHC.Hs
+import           GHC.Hs.ImpExp
+#else
 import           HsSyn
 import           HsImpExp
+#endif
+import           Name
 import           FieldLabel
 import qualified FastString
 import           BasicTypes
